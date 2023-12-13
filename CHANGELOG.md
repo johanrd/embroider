@@ -1,6 +1,15 @@
 # Embroider Changelog
 ## Release (2023-12-13)
 
+
+
+#### :house: Internal
+* [#1724](https://github.com/embroider-build/embroider/pull/1724) fix publish for stable branch ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+## Release (2023-12-13)
+
 @embroider/compat 3.4.2 (patch)
 
 #### :bug: Bug Fix
