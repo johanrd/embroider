@@ -2,7 +2,7 @@
 
 This is a guide for addon authors who want to publish their addon in **v2 format**.
 
-> The actual V2 Format RFC only cares what format you **publish** to NPM. It doesn't necessarily care about your **authoring** format or toolchain. But in this guide, we are picking good defaults, and we hope to polish this experience until it's ready to become a new RFC as the default new Ember Addon authoring blueprint.
+> The actual V2 Format RFC only cares what format you **publish** to NPM. It doesn't necessarily care about your **authoring** format or toolchain. But in this guide, we are picking good defaults, and we hope to polish this experience until it's ready to become a new RFC as the default new Ember Addon authoring blueprint. 
 
 ## What Addons should and should not be converted to V2?
 
@@ -258,7 +258,12 @@ module.exports = addonV1Shim(__dirname);
       "version": 2
     }
     ```
-16. In the `addon` directory, run `yarn start` to start building the addon.
-17. In a separate shell, you should be able to go into the `test-app` directory and run `yarn start` or `yarn test` and see your tests passing.
+16. Now we are ready to build the addon. In the `addon` directory, run `yarn start`. This will compile your authored code into the `dist/` folder in v2 format.
 
+## Part 5: Testing your addon
+In a separate shell, you should be able to go into the `test-app` directory and run `yarn start` or `yarn test` and see that your tests are passing.
+
+Note that v2 addon needs to be built, so you can't easily point package.json files at the git repo of your addon for easy cross-repo testing before it is published to NPM. There are [workflows you can use](https://github.com/embroider-build/addon-blueprint/blob/main/files/.github/workflows/push-dist.yml) to bring back that capability.
+
+## Part 6: Publishing
 When all tests are passing, you have a fully-working V2 addon and you're ready to release it. To publish, you will run `npm publish` in the `addon` directory.
