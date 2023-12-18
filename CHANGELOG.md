@@ -1,4 +1,68 @@
 # Embroider Changelog
+## Release (2023-12-18)
+
+@embroider/addon-dev 5.0.0 (major)
+@embroider/broccoli-side-watch 0.1.0 (minor)
+@embroider/compat 4.0.0 (major)
+@embroider/core 3.5.0 (minor)
+@embroider/macros 2.0.0 (major)
+@embroider/shared-internals 2.5.2 (patch)
+@embroider/test-setup 4.0.0 (major)
+@embroider/util 1.12.2 (patch)
+@embroider/vite 0.3.0 (minor)
+@embroider/webpack 4.0.0 (major)
+
+#### :boom: Breaking Change
+* `@embroider/compat`, `@embroider/macros`, `@embroider/webpack`, `@embroider/test-fixtures`, `@embroider/test-scenarios`
+  * [#1692](https://github.com/embroider-build/embroider/pull/1692) force importSync to always be eager ([@mansona](https://github.com/mansona))
+* `@embroider/addon-dev`
+  * [#1697](https://github.com/embroider-build/embroider/pull/1697) Hide base path from public URL of rollup-public-assets ([@simonihmig](https://github.com/simonihmig))
+
+#### :rocket: Enhancement
+* `@embroider/vite`
+  * [#1680](https://github.com/embroider-build/embroider/pull/1680) [vite] use transform instead of load for gjs & hbs files ([@patricklx](https://github.com/patricklx))
+  * [#1704](https://github.com/embroider-build/embroider/pull/1704) add correct extensions to optimizeDeps() config ([@mansona](https://github.com/mansona))
+* `@embroider/core`, `@embroider/vite`, `@embroider/webpack`
+  * [#1707](https://github.com/embroider-build/embroider/pull/1707) improved resolver logging ([@ef4](https://github.com/ef4))
+* `@embroider/broccoli-side-watch`
+  * [#1693](https://github.com/embroider-build/embroider/pull/1693) Add broccoli-side-watch package ([@balinterdi](https://github.com/balinterdi))
+* `@embroider/compat`, `@embroider/core`, `@embroider/vite`
+  * [#1650](https://github.com/embroider-build/embroider/pull/1650) Add Esbuild resolver ([@mansona](https://github.com/mansona))
+* `@embroider/compat`, `@embroider/core`, `@embroider/test-scenarios`
+  * [#1648](https://github.com/embroider-build/embroider/pull/1648) use package paths instead of relative paths for app tree resolving ([@mansona](https://github.com/mansona))
+
+#### :bug: Bug Fix
+* `vite-app`
+  * [#1731](https://github.com/embroider-build/embroider/pull/1731) Vite fixes ([@mansona](https://github.com/mansona))
+* `@embroider/vite`
+  * [#1729](https://github.com/embroider-build/embroider/pull/1729) remove missing import from vite index ([@mansona](https://github.com/mansona))
+  * [#1713](https://github.com/embroider-build/embroider/pull/1713) esbuild: fix babel config location ([@mansona](https://github.com/mansona))
+* `@embroider/compat`
+  * [#1717](https://github.com/embroider-build/embroider/pull/1717) Always load ember-testing package eagerly ([@ef4](https://github.com/ef4))
+* `@embroider/compat`, `@embroider/core`, `@embroider/vite`, `@embroider/webpack`, `@embroider/test-support`, `@embroider/test-scenarios`
+  * [#1686](https://github.com/embroider-build/embroider/pull/1686) Resolver bugfixes ([@mansona](https://github.com/mansona))
+
+#### :house: Internal
+* `@embroider/addon-dev`, `@embroider/compat`, `@embroider/core`, `@embroider/macros`
+  * [#1723](https://github.com/embroider-build/embroider/pull/1723) Sync stable->main ([@ef4](https://github.com/ef4))
+* `@embroider/addon-dev`, `@embroider/compat`
+  * [#1721](https://github.com/embroider-build/embroider/pull/1721) Merge stable into main ([@mansona](https://github.com/mansona))
+* `@embroider/macros`
+  * [#1712](https://github.com/embroider-build/embroider/pull/1712) Merge stable ([@ef4](https://github.com/ef4))
+* `@embroider/test-scenarios`
+  * [#1703](https://github.com/embroider-build/embroider/pull/1703) Disable chokidar polling override in tests ([@chancancode](https://github.com/chancancode))
+* Other
+  * [#1700](https://github.com/embroider-build/embroider/pull/1700) Merge stable into main ([@mansona](https://github.com/mansona))
+* `@embroider/compat`, `@embroider/shared-internals`
+  * [#1691](https://github.com/embroider-build/embroider/pull/1691) Move fix for @ember-data/debug into virtualPeerDeps ([@mansona](https://github.com/mansona))
+
+#### Committers: 6
+- Balint Erdi ([@balinterdi](https://github.com/balinterdi))
+- Chris Manson ([@mansona](https://github.com/mansona))
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+- Godfrey Chan ([@chancancode](https://github.com/chancancode))
+- Patrick Pircher ([@patricklx](https://github.com/patricklx))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
 ## Release (2023-12-13)
 
 @embroider/addon-dev 4.1.3 (patch)
