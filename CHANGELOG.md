@@ -1,5 +1,10 @@
 # Embroider Changelog
 
+
+
+
+
+
 ## Release (2025-08-05)
 
 * @embroider/compat 4.1.2 (patch)
