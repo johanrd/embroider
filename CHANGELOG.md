@@ -2,6 +2,35 @@
 
 ## Release (2025-09-30)
 
+* @embroider/compat 4.1.6 (patch)
+* @embroider/core 4.2.3 (patch)
+* @embroider/legacy-inspector-support 0.2.0 (minor)
+* @embroider/macros 1.19.0 (minor)
+* @embroider/router 3.0.5 (patch)
+* @embroider/vite 1.2.3 (patch)
+
+#### :rocket: Enhancement
+* `@embroider/macros`
+  * [#2550](https://github.com/embroider-build/embroider/pull/2550) new Macro: `appEmberSatisfies(range)` ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+* `@embroider/legacy-inspector-support`
+  * [#2522](https://github.com/embroider-build/embroider/pull/2522) Add compat ember-inspector support ([@BlueCutOfficial](https://github.com/BlueCutOfficial))
+
+#### :bug: Bug Fix
+* `@embroider/vite`
+  * [#2566](https://github.com/embroider-build/embroider/pull/2566) Fix CI for upstream rolldown and webpack changes ([@ef4](https://github.com/ef4))
+
+#### :house: Internal
+* `@embroider/compat`, `@embroider/core`, `@embroider/legacy-inspector-support`, `@embroider/macros`, `@embroider/router`, `@embroider/vite`
+  * [#2564](https://github.com/embroider-build/embroider/pull/2564) Prepare Release ([@github-actions[bot]](https://github.com/apps/github-actions))
+
+#### Committers: 4
+- Edward Faulkner ([@ef4](https://github.com/ef4))
+- Marine Dunstetter ([@BlueCutOfficial](https://github.com/BlueCutOfficial))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+- [@github-actions[bot]](https://github.com/apps/github-actions)
+
+## Release (2025-09-30)
+
 * @embroider/compat 4.1.5 (patch)
 * @embroider/core 4.2.2 (patch)
 * @embroider/legacy-inspector-support 0.1.0 (minor)
