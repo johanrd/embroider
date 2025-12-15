@@ -248,6 +248,11 @@ async function maybeCaptureNewOptimizedDep(
 
   debug('maybeCaptureNewOptimizedDep: doing re-resolve for %s ', foundFile);
 
+  // Mark as attempted BEFORE re-resolving to prevent infinite loops.
+  // In some environments (e.g., containers with different symlink behavior),
+  // the comparison below may not detect that we resolved to the same file.
+  notViteDeps.add(foundFile);
+
   let jumpRoot = join(tmpdir, 'embroider-vite-jump-' + hashed(pkg.root + '|' + pkg.name));
   if (!existsSync(jumpRoot)) {
     let tmp = buildViteJump(pkg);
@@ -269,10 +274,7 @@ async function maybeCaptureNewOptimizedDep(
       // `optimizeDeps.exclude` or they might be working in a monorepo where an
       // addon is not in node_modules. In both cases vite will decide not to
       // optimize the file, even though we gave it a chance to.
-      //
-      // We cache that result so we don't keep trying.
       debug('maybeCaptureNewOptimizedDep: %s did not become an optimized dep', foundFile);
-      notViteDeps.add(foundFile);
     }
 
     return newResult;
