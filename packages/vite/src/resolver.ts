@@ -11,9 +11,18 @@ import { externalName } from '@embroider/reverse-exports';
 import fs from 'fs-extra';
 import { createHash } from 'crypto';
 import { BackChannel } from './backchannel.js';
-import { existsSync, mkdtempSync } from 'node:fs';
+import { existsSync, mkdtempSync, realpathSync } from 'node:fs';
 
 const { ensureSymlinkSync, writeFileSync, renameSync } = fs;
+
+// Helper to safely get realpath, falling back to original path
+function safeRealpath(p: string): string {
+  try {
+    return realpathSync(p);
+  } catch {
+    return p;
+  }
+}
 
 const debug = makeDebug('embroider:vite');
 
@@ -241,12 +250,32 @@ async function maybeCaptureNewOptimizedDep(
     return result;
   }
 
-  if (notViteDeps.has(foundFile)) {
+  // Skip re-resolution for subpath imports - Rolldown's native resolver
+  // incorrectly handles subpath exports by appending to the main entry point
+  // e.g. @pkg/__private__/token becomes @pkg/dist/index.js/__private__/token
+  if (
+    (target.includes('/') && !target.startsWith('@')) ||
+    (target.startsWith('@') && target.split('/').length > 2)
+  ) {
+    debug('maybeCaptureNewOptimizedDep: skipping subpath import %s', target);
+    return result;
+  }
+
+  // Use realpath for more robust loop detection in containerized environments
+  // where symlink resolution may differ from native filesystems
+  let realFoundFile = safeRealpath(foundFile);
+  if (notViteDeps.has(foundFile) || notViteDeps.has(realFoundFile)) {
     debug('maybeCaptureNewOptimizedDep: already attempted %s', foundFile);
     return result;
   }
 
-  debug('maybeCaptureNewOptimizedDep: doing re-resolve for %s ', foundFile);
+  // Add to notViteDeps BEFORE attempting re-resolve to prevent infinite loops.
+  // This is critical for containerized environments where symlink resolution
+  // differs, causing the post-resolution comparison to fail.
+  notViteDeps.add(foundFile);
+  notViteDeps.add(realFoundFile);
+
+  debug('maybeCaptureNewOptimizedDep: doing re-resolve for %s (real: %s)', foundFile, realFoundFile);
 
   let jumpRoot = join(tmpdir, 'embroider-vite-jump-' + hashed(pkg.root + '|' + pkg.name));
   if (!existsSync(jumpRoot)) {
@@ -264,15 +293,20 @@ async function maybeCaptureNewOptimizedDep(
   }
   let newResult = await context.resolve(target, join(jumpRoot, 'package.json'));
   if (newResult) {
-    if (idFromResult(newResult) === foundFile) {
+    let newResultId = idFromResult(newResult);
+    let realNewResultId = newResultId ? safeRealpath(newResultId) : undefined;
+    // Compare using realpath to handle symlink differences in containers
+    if (newResultId === foundFile || realNewResultId === realFoundFile) {
       // This case is normal. For example, people could be using
       // `optimizeDeps.exclude` or they might be working in a monorepo where an
       // addon is not in node_modules. In both cases vite will decide not to
       // optimize the file, even though we gave it a chance to.
-      //
-      // We cache that result so we don't keep trying.
       debug('maybeCaptureNewOptimizedDep: %s did not become an optimized dep', foundFile);
-      notViteDeps.add(foundFile);
+    }
+    // Also add the new result to prevent loops through different paths
+    if (newResultId) {
+      notViteDeps.add(newResultId);
+      if (realNewResultId) notViteDeps.add(realNewResultId);
     }
 
     return newResult;
