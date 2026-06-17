@@ -1,0 +1,22 @@
+name: verify-map
+on:
+  pull_request: {}
+
+concurrency:
+  group: verify-map-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vite-app-basics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          use_lockfile: false
+      - name: run only the vite-app-basics scenario (release variant)
+        run: pnpm run test --filter "/^release-vite-app-basics/"
+        working-directory: tests/scenarios
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
