@@ -464,13 +464,7 @@ export class Resolver {
       browser: true,
       conditions: ['default', 'imports'],
     });
-    // Append `.js` so the id can't end in a route-controlled extension like
-    // `.map`. Vite's dev sourcemap middleware intercepts any request whose path
-    // ends in `.map` and serves a sourcemap instead of JS, so a code-split route
-    // named `map` fails to load in dev ("Failed to fetch dynamically imported
-    // module"). The route rides in the resolver `meta` and nothing decodes this
-    // suffix, so the tail is free to change.
-    let target = matched ? `${matched}:route=${routeName}.js` : `-embroider-route-entrypoint.js:route=${routeName}.js`;
+    let target = matched ? `${matched}:route=${routeName}` : `-embroider-route-entrypoint.js:route=${routeName}`;
     let specifier = resolve(pkg.root, target);
 
     return logTransition(
