@@ -424,7 +424,9 @@ class TemplateResolver implements ASTPlugin {
     }
 
     if (fileRules && componentRules) {
-      return mergeWith(fileRules, componentRules, appendArrays);
+      // Merge into a fresh object: both operands are owned by the memoized
+      // `rules` maps, and mergeWith writes into its first argument.
+      return mergeWith({}, fileRules, componentRules, appendArrays);
     }
 
     return fileRules ?? componentRules;
